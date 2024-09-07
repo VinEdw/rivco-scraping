@@ -1,0 +1,34 @@
+PRAGMA foreign_keys = ON;
+
+DROP TABLE IF EXISTS Parcel;
+DROP TABLE IF EXISTS Street;
+DROP TABLE IF EXISTS City;
+DROP TABLE IF EXISTS Property_Type;
+
+CREATE TABLE Parcel (
+  id INTEGER NOT NULL PRIMARY KEY UNIQUE,
+  longitude REAL,
+  latitude REAL,
+  address_number INTEGER,
+  street_id INTEGER,
+  city_id INTEGER,
+  property_type_id INTEGER,
+  FOREIGN KEY (street_id) REFERENCES Street (id),
+  FOREIGN KEY (city_id) REFERENCES City (id),
+  FOREIGN KEY (property_type_id) REFERENCES Property_Type (id)
+);
+
+CREATE TABLE Street (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+  name TEXT UNIQUE
+);
+
+CREATE TABLE City (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+  name TEXT UNIQUE
+);
+
+CREATE TABLE Property_Type (
+  id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+  name TEXT UNIQUE
+);
