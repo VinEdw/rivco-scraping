@@ -13,9 +13,11 @@ CREATE TABLE Parcel (
   street_id INTEGER,
   city_id INTEGER,
   property_type_id INTEGER,
+  unit_id INTEGER,
   FOREIGN KEY (street_id) REFERENCES Street (id),
   FOREIGN KEY (city_id) REFERENCES City (id),
-  FOREIGN KEY (property_type_id) REFERENCES Property_Type (id)
+  FOREIGN KEY (property_type_id) REFERENCES Property_Type (id),
+  FOREIGN KEY (unit_id) REFERENCES Unit (id)
 );
 
 CREATE TABLE Street (
@@ -29,6 +31,11 @@ CREATE TABLE City (
 );
 
 CREATE TABLE Property_Type (
-  id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+  name TEXT UNIQUE
+);
+
+CREATE TABLE Unit (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
   name TEXT UNIQUE
 );
