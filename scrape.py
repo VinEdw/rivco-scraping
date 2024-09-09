@@ -95,6 +95,8 @@ if __name__ == "__main__":
     # Iterate through the possible 8 digit numbers
     for i in range(100_000_000):
         apn_possibilites = get_apn_possibilities(i)
+        if all(db.check_for_apn(cur, apn) for apn in apn_possibilites):
+            continue
         apn_list = request_apn_list(i)
         for apn in apn_possibilites:
             print(apn_to_str(apn))
