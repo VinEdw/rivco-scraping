@@ -39,7 +39,7 @@ def request_apn_list(search_num: int) -> list[int]:
         "term": num_to_search_str(search_num),
     }
     r = requests.get(url, params=payload)
-    apn_list = [int(item["value"]) for item in r.json() if item != []]
+    apn_list = [int(item["value"]) for item in r.json() if item != [] and item["value"].isdigit()]
     return apn_list
 
 def request_parcel_data(apn: int):
