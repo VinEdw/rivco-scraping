@@ -7,13 +7,13 @@ def check_for_apn(cur: sqlite3.Cursor, apn: int) -> bool:
     """
     cur.execute("""SELECT 1 FROM Parcel WHERE id = (?)""", (apn,))
     result = cur.fetchone()
-    return True if result != None else False
+    return True if result is not None else False
 
 def get_street_id(cur: sqlite3.Cursor, street_name):
     """
     Get the id for the given street name, creating one if it does not exist.
     """
-    if street_name == None:
+    if street_name is None:
         return None
     cur.execute("""INSERT OR IGNORE INTO Street (name) VALUES (?)""", (street_name,))
     cur.execute("""SELECT id FROM Street WHERE name = ?""", (street_name,))
@@ -23,7 +23,7 @@ def get_city_id(cur: sqlite3.Cursor, city_name):
     """
     Get the id for the given city name, creating one if it does not exist.
     """
-    if city_name == None:
+    if city_name is None:
         return None
     cur.execute("""INSERT OR IGNORE INTO City (name) VALUES (?)""", (city_name,))
     cur.execute("""SELECT id FROM City WHERE name = ?""", (city_name,))
@@ -33,7 +33,7 @@ def get_property_type_id(cur: sqlite3.Cursor, property_type):
     """
     Get the id for the given property type, creating one if it does not exist.
     """
-    if property_type == None:
+    if property_type is None:
         return None
     cur.execute("""INSERT OR IGNORE INTO Property_Type (name) VALUES (?)""", (property_type,))
     cur.execute("""SELECT id FROM Property_Type WHERE name = ?""", (property_type,))
@@ -43,7 +43,7 @@ def get_unit_id(cur: sqlite3.Cursor, unit):
     """
     Get the id for the given unit, creating one if it does not exist.
     """
-    if unit == None:
+    if unit is None:
         return None
     cur.execute("""INSERT OR IGNORE INTO Unit (name) VALUES (?)""", (unit,))
     cur.execute("""SELECT id FROM Unit WHERE name = ?""", (unit,))

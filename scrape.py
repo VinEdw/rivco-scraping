@@ -60,15 +60,15 @@ def request_parcel_data(apn: int):
     # Store all the important parcel_data to return
     parcel_data = {}
     # Longitude and latitude
-    parcel_data["longitude"] = float(result[0]["lng"]) if (result[0]["lng"] != None) else None
-    parcel_data["latitude"] = float(result[0]["lat"]) if (result[0]["lat"] != None) else None
+    parcel_data["longitude"] = float(result[0]["lng"]) if (result[0]["lng"] is not None) else None
+    parcel_data["latitude"] = float(result[0]["lat"]) if (result[0]["lat"] is not None) else None
     # Property type
     parcel_data["property_type"] = result[0].get("class_code", None)
     # City
-    parcel_data["city"] = result[0]["District"].split(maxsplit=1)[1] if (result[0]["District"] != None) else None
+    parcel_data["city"] = result[0]["District"].split(maxsplit=1)[1] if (result[0]["District"] is not None) else None
     # Address splitting
     address = result[0].get("address", None)
-    if address == None:
+    if address is None:
         parcel_data["unit"] = None
         parcel_data["address_number"] = None
         parcel_data["street"] = None
@@ -108,7 +108,7 @@ if __name__ == "__main__":
                 db.add_null_parcel(cur, apn)
             else:
                 parcel_data = request_parcel_data(apn)
-                if parcel_data == None:
+                if parcel_data is None:
                     print("\tNo Data Found")
                     db.add_null_parcel(cur, apn)
                 else:
