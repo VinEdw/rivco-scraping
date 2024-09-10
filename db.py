@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sqlite3
 
 def check_for_apn(cur: sqlite3.Cursor, apn: int) -> bool:
