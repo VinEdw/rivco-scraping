@@ -41,7 +41,7 @@ def request_apn_list(search_num: int) -> list[int]:
     apn_list = [int(item["value"]) for item in r.json() if item != []]
     return apn_list
 
-def request_parcel_data(apn: int) -> None|dict:
+def request_parcel_data(apn: int):
     """
     Get the parcel data for the given APN.
     """

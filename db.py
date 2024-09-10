@@ -8,7 +8,7 @@ def check_for_apn(cur: sqlite3.Cursor, apn: int) -> bool:
     result = cur.fetchone()
     return True if result != None else False
 
-def get_street_id(cur: sqlite3.Cursor, street_name: None|str) -> None|int:
+def get_street_id(cur: sqlite3.Cursor, street_name):
     """
     Get the id for the given street name, creating one if it does not exist.
     """
@@ -18,7 +18,7 @@ def get_street_id(cur: sqlite3.Cursor, street_name: None|str) -> None|int:
     cur.execute("""SELECT id FROM Street WHERE name = ?""", (street_name,))
     return cur.fetchone()[0]
 
-def get_city_id(cur: sqlite3.Cursor, city_name: None|str) -> None|int:
+def get_city_id(cur: sqlite3.Cursor, city_name):
     """
     Get the id for the given city name, creating one if it does not exist.
     """
@@ -28,7 +28,7 @@ def get_city_id(cur: sqlite3.Cursor, city_name: None|str) -> None|int:
     cur.execute("""SELECT id FROM City WHERE name = ?""", (city_name,))
     return cur.fetchone()[0]
 
-def get_property_type_id(cur: sqlite3.Cursor, property_type: None|str) -> None|int:
+def get_property_type_id(cur: sqlite3.Cursor, property_type):
     """
     Get the id for the given property type, creating one if it does not exist.
     """
@@ -38,7 +38,7 @@ def get_property_type_id(cur: sqlite3.Cursor, property_type: None|str) -> None|i
     cur.execute("""SELECT id FROM Property_Type WHERE name = ?""", (property_type,))
     return cur.fetchone()[0]
 
-def get_unit_id(cur: sqlite3.Cursor, unit: None|str) -> None|int:
+def get_unit_id(cur: sqlite3.Cursor, unit):
     """
     Get the id for the given unit, creating one if it does not exist.
     """
