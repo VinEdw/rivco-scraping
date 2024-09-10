@@ -77,9 +77,9 @@ def request_parcel_data(apn: int):
         unit_pattern = " UNIT "
         apt_pattern = " APT "
         if unit_pattern in address:
-            address, unit = address.split(unit_pattern)
+            address, unit = address.split(unit_pattern, maxsplit=1)
         elif apt_pattern in address:
-            address, unit = address.split(apt_pattern)
+            address, unit = address.split(apt_pattern, maxsplit=1)
         else:
             unit = None
         parcel_data["unit"] = unit
