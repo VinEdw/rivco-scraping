@@ -9,14 +9,10 @@ SELECT Parcel.id,
   City.name AS 'city',
   Property_Type.name AS 'property_type',
   Unit.name AS 'unit'
-FROM
-  Parcel JOIN Street JOIN City JOIN Property_Type JOIN Unit
-ON
-  Parcel.street_id = Street.id
-  AND Parcel.city_id = City.id
-  AND Parcel.property_type_id = Property_Type.id
-  AND Parcel.unit_id = Unit.id
-WHERE
-  Parcel.street_id IS NOT NULL
+FROM Parcel
+  JOIN Street ON Parcel.street_id = Street.id
+  JOIN City ON Parcel.city_id = City.id
+  JOIN Property_Type ON Parcel.property_type_id = Property_Type.id
+  LEFT JOIN Unit ON Parcel.unit_id = Unit.id
 ORDER BY
-  Parcel.id
+  Parcel.id;
