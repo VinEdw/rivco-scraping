@@ -112,8 +112,9 @@ function point_in_polygon(lat, lng, polygon_points) {
 }
 
 # Function to print an output row for the CSV with the assigned addresses
-function print_output_row(territory_number, apartment_number, number, street, suburb, state, latitude, longitude, notes) {
+function print_output_row(territory_number, category_code, apartment_number, number, street, suburb, state, latitude, longitude, notes) {
   printf("%s,", csv_escape_string(territory_number));
+  printf("%s,", csv_escape_string(category_code));
   printf("%s,", csv_escape_string(apartment_number));
   printf("%s,", csv_escape_string(number));
   printf("%s,", csv_escape_string(street));
@@ -129,15 +130,16 @@ BEGIN {
 
   # Print the headers for the output CSV
   # 1. TerritoryNumber
-  # 2. ApartmentNumber
-  # 3. Number
-  # 4. Street
-  # 5. Suburb
-  # 6. State
-  # 7. Latitude
-  # 8. Longitude
-  # 9. Notes
-  print("TerritoryNumber,ApartmentNumber,Number,Street,Suburb,State,Latitude,Longitude,Notes");
+  # 2. CategoryCode
+  # 3. ApartmentNumber
+  # 4. Number
+  # 5. Street
+  # 6. Suburb
+  # 7. State
+  # 8. Latitude
+  # 9. Longitude
+  # 10. Notes
+  print("TerritoryNumber,CategoryCode,ApartmentNumber,Number,Street,Suburb,State,Latitude,Longitude,Notes");
 }
 
 # Check each address where the latitude and longitude are not null
@@ -146,7 +148,8 @@ NR != 1 && $2 != "" && $3 != "" {
   # Assign the address to the first matching territory
   for (terr in territory_boundaries) {
     if (point_in_polygon($3, $2, territory_boundaries[terr])) {
-      print_output_row(terr, $8, $4, $5, $6, "CA", $3, $2, $7);
+      split(terr, split_terr, "-");
+      print_output_row(split_terr[2], split_terr[1], $8, $4, $5, $6, "CA", $3, $2, $7);
       break;
     }
   }
