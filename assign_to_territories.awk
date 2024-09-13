@@ -104,39 +104,4 @@ BEGIN {
 
 END {
 
-  # for (terr in territory_boundaries) {
-  #   print(terr);
-  #   for (i in territory_boundaries[terr]) {
-  #     lat = territory_boundaries[terr][i][1];
-  #     lng = territory_boundaries[terr][i][2];
-  #     printf("\t%d: %f, %f\n", i, lat, lng)
-  #   }
-  # }
-
-  test_points[1][1] = 0;
-  test_points[1][2] = 0;
-  test_points[2][1] = 0;
-  test_points[2][2] = 1;
-  test_points[3][1] = 1;
-  test_points[3][2] = 2;
-  test_points[4][1] = 2;
-  test_points[4][2] = 0;
-
-  print(point_in_polygon(-1, 1, test_points) == 0);
-  print(point_in_polygon(-1, 0, test_points) == 0);
-  print(point_in_polygon(0, -1, test_points) == 0);
-  print(point_in_polygon(0.5, 1.8, test_points) == 0);
-  print(point_in_polygon(0.9, -0.1, test_points) == 0);
-  print(point_in_polygon(1.5, 2, test_points) == 0);
-  print(point_in_polygon(0.5, 2, test_points) == 0);
-  print(point_in_polygon(-1, 2, test_points) == 0);
-  print(point_in_polygon(3, 0, test_points) == 0);
-  print(point_in_polygon(1, 1, test_points) == 1);
-  print(point_in_polygon(0.5, 0.5, test_points) == 1);
-  print(point_in_polygon(0.5, 1.2, test_points) == 1);
-  print(point_in_polygon(1.5, 0.5, test_points) == 1);
-  print(point_in_polygon(1.1, 1.5, test_points) == 1);
-  print(point_in_polygon(1, 1.7, test_points) == 1);
 }
-
-# awk --csv -f nw_import.awk -v territories_csv=territories.csv territories.csv 
