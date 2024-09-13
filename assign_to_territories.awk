@@ -11,6 +11,19 @@ function min(x, y) {
   return x < y ? x : y;
 }
 
+# Function to adjust the input string to use CSV escaping rules
+function csv_escape_string(str) {
+    # Escape " characters by doubling them to ""
+    if (str ~ /"/) {
+      gsub(/"/, "\"\"", str)
+    }
+    # If double quotes, commas, or newlines are present, surround the string in double quotes
+    if (str ~ /[\n,"]/) {
+      str = sprintf("\"%s\"", str)
+    }
+    return str
+}
+
 # Function to initialize an input array with territory boundaries
 # This array maps territory numbers to lists of (lat, lng) points
 # Pass in the name of the CSV file that contains the list of points in column 12
@@ -98,10 +111,43 @@ function point_in_polygon(lat, lng, polygon_points) {
   return intersection_count % 2 != 0;
 }
 
-BEGIN {
-  initialize_territory_boundaries(territories_csv, territory_boundaries);
+# Function to print an output row for the CSV with the assigned addresses
+function print_output_row(territory_number, apartment_number, number, street, suburb, state, latitude, longitude, notes) {
+  printf("%s,", csv_escape_string(territory_number));
+  printf("%s,", csv_escape_string(apartment_number));
+  printf("%s,", csv_escape_string(number));
+  printf("%s,", csv_escape_string(street));
+  printf("%s,", csv_escape_string(suburb));
+  printf("%s,", csv_escape_string(state));
+  printf("%s,", csv_escape_string(latitude));
+  printf("%s,", csv_escape_string(longitude));
+  printf("%s\n", csv_escape_string(notes));
 }
 
-END {
+BEGIN {
+  initialize_territory_boundaries(territories_csv, territory_boundaries);
 
+  # Print the headers for the output CSV
+  # 1. TerritoryNumber
+  # 2. ApartmentNumber
+  # 3. Number
+  # 4. Street
+  # 5. Suburb
+  # 6. State
+  # 7. Latitude
+  # 8. Longitude
+  # 9. Notes
+  print("TerritoryNumber,ApartmentNumber,Number,Street,Suburb,State,Latitude,Longitude,Notes");
+}
+
+# Check each address where the latitude and longitude are not null
+NR != 1 && $2 != "" && $3 != "" {
+  # Check if the address lies within each territory polygon
+  # Assign the address to the first matching territory
+  for (terr in territory_boundaries) {
+    if (point_in_polygon($3, $2, territory_boundaries[terr])) {
+      print_output_row(terr, $8, $4, $5, $6, "CA", $3, $2, $7);
+      break;
+    }
+  }
 }
