@@ -27,6 +27,8 @@ function csv_escape_string(str) {
 # Function to initialize an input array with territory boundaries
 # This array maps territory numbers to lists of (lat, lng) points
 # Pass in the name of the CSV file that contains the list of points in column 12
+# The territory category code is found in column 2
+# The territory number is found in column 4
 # These lists have the structure [lng1,lat1],[lng2,lat2],[lng3,lat3],[lng4,lat4],...
 function initialize_territory_boundaries(file, array) {
   row_num = 0
